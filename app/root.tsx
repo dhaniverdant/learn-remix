@@ -1,8 +1,17 @@
+import type { LinksFunction } from "@remix-run/node";
+import appStylesHref from "./app.css";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: appStylesHref },
+];
+
 import {
   Form,
+  Link,
   Links,
   LiveReload,
   Meta,
+  Outlet,
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
@@ -37,13 +46,20 @@ export default function App() {
           <nav>
             <ul>
               <li>
-                <a href={`/contacts/1`}>Your Name</a>
+                {/* a tag didn't use CSR, it requests document from server everytime it clicked */}
+                {/* <a href={`/contacts/1`}>Your Name</a> */}
+                {/* so we use link as below as best alternative bcs it uses CSR */}
+                <Link to={`/contacts/1`}>Your Name</Link>
               </li>
               <li>
-                <a href={`/contacts/2`}>Your Friend</a>
+                {/* <a href={`/contacts/2`}>Your Friend</a> */}
+                <Link to={`/contacts/2`}>Your Name</Link>
               </li>
             </ul>
           </nav>
+        </div>
+        <div id="detail">
+          <Outlet />
         </div>
 
         <ScrollRestoration />
