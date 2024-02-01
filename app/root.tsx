@@ -43,6 +43,11 @@ export default function App() {
   const navigation = useNavigation();
   const [query, setQuery] = useState(q || "");
   const submit = useSubmit();
+  const searching =
+    navigation.location &&
+    new URLSearchParams(navigation.location.search).has(
+      "q"
+    );
 
   useEffect(() => {
     setQuery(q || "");
@@ -78,8 +83,9 @@ export default function App() {
                   setQuery(event.currentTarget.value)
                 }
                 value={query}
+                className={navigation.state === "loading" && !searching ? "loading" : ""}
               />
-              <div id="search-spinner" aria-hidden hidden={true} />
+              <div id="search-spinner" aria-hidden hidden={!searching} />
             </Form>
             <Form method="post">
               <button type="submit">New</button>
