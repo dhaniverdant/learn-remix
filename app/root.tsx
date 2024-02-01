@@ -20,6 +20,7 @@ import {
 } from "@remix-run/react";
 
 import { createEmptyContact, getContacts } from "./data";
+import { useEffect, useState } from "react";
 
 export const loader = async ({
   request,
@@ -39,6 +40,11 @@ export const action = async () => {
 export default function App() {
   const { contacts, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
+  const [query, setQuery] = useState(q || "");
+
+  useEffect(() => {
+    setQuery(q || "");
+  }, [q]);
 
   return (
     <html lang="en">
@@ -60,6 +66,10 @@ export default function App() {
                 placeholder="Search"
                 type="search"
                 name="q"
+                onChange={(event) =>
+                  setQuery(event.currentTarget.value)
+                }
+                value={query}
               />
               <div id="search-spinner" aria-hidden hidden={true} />
             </Form>
